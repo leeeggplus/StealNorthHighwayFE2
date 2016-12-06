@@ -11,8 +11,8 @@ namespace SNHTicketV2
     {
         static void Main(string[] args)
         {
-            AuthProvider uap = new UserAuthProvider("a", "b");
-            AuthProvider vap = new VipAuthProvider("a", "b");
+            AuthProvider uap = new UserAuthProvider("leeegg1", "angel0416");
+            uap.Authenticate();
         }
     }
 }
