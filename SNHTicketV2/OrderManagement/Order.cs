@@ -22,7 +22,6 @@ namespace SNHTicketV2.OrderManagement
         // Check before submit
         // Only submit if request is logically valid/correct
         private bool pb_isValid;
-        private AuthProvider p_authProvider;
 
         // response from SNH48
         private bool    pb_OrderState;
@@ -88,11 +87,6 @@ namespace SNHTicketV2.OrderManagement
             set { this.ps_Message = value; }
         }
 
-        public AuthProvider AuthProvider
-        {
-            get { return this.p_authProvider; }
-        }
-
         /// <summary>
         /// .ctor
         /// </summary>
@@ -124,13 +118,7 @@ namespace SNHTicketV2.OrderManagement
             {
                 this.pb_OrderState = false;
                 this.ps_OrderSNHSysName = string.Empty;
-                this.ps_Message = string.Empty;
-
-                // initialize auth provider
-                if (this.p_UserType == UserType.UnRealNameAuthedUser)
-                    this.p_authProvider = new UserAuthProvider(this.ps_Username, this.ps_Pwd);
-                else
-                    this.p_authProvider = new VipAuthProvider(this.ps_Username, this.ps_Pwd);                          
+                this.ps_Message = string.Empty;                                    
             }
         }
     }

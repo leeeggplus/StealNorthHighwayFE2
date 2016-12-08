@@ -6,12 +6,12 @@ using System.Collections;
 using System.Configuration;
 
 using System.Web.Script.Serialization;
-
-
 using System.Threading.Tasks;
 using System.Linq;
 using System.Text;
 using System.Collections.Generic;
+
+using SNHTicketV2.OrderManagement;
 
 namespace SNHTicketV2.Authentication
 {
@@ -21,7 +21,7 @@ namespace SNHTicketV2.Authentication
         /// ctor
         /// </summary>
         /// <returns>Null</returns>
-        public UserAuthProvider(string userName, string userPwd) : base(userName, userPwd)
+        public UserAuthProvider(Order order) : base(order)
         {            
         }     
 

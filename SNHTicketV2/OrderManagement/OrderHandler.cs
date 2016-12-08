@@ -95,16 +95,24 @@ namespace SNHTicketV2.OrderManagement
         static void FuncWaitCallback(object parmOrder)
         {
             Order order = parmOrder as Order;
+            AuthProvider authProvider = null;
 
-            if (order != null)
+            if (order == null)
             {
-                // Authenticate
-                order.AuthProvider.Authenticate();
+                // errors here
+            }
 
-                if (order.AuthProvider.IsAuthComplete())
-                {
-                    // Submit order here
-                }
+            // initialize auth provider
+            if (order.UserType == UserType.UnRealNameAuthedUser)
+                authProvider = new UserAuthProvider(order);
+            else
+                authProvider = new VipAuthProvider(order);
+
+            if (authProvider != null)
+            {
+                authProvider.Authenticate();
+                if (authProvider.IsAuthComplete())
+                    authProvider.SubmitOrder();
             }
         }
     }

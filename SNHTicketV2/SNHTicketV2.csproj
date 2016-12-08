@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Authentication\AuthProvider.cs" />
+    <Compile Include="Authentication\SubmitCheckOrderResponse.cs" />
     <Compile Include="Authentication\UserAuthProvider.cs" />
     <Compile Include="Authentication\VipAuthProvider.cs" />
     <Compile Include="OrderManagement\Order.cs" />
