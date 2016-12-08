@@ -52,7 +52,18 @@ namespace SNHTicketV2.Authentication
         protected static string ps_AcceptEncoding = "gzip, deflate, sdch";
 
         // abstract methods
+        /// <summary>
+        /// public method for checking auth state.
+        /// </summary>
+        /// <returns>bool</returns>
         public abstract bool IsAuthComplete();
+
+        // abstract methods
+        /// <summary>
+        /// Authentication
+        /// vip user and normal un-real-name authed user have different authentication steps
+        /// </summary>
+        /// <returns>bool</returns>
         public abstract bool Authenticate();
 
         /* ctor */
@@ -151,7 +162,7 @@ namespace SNHTicketV2.Authentication
         }
 
         /// <summary>
-        /// Auth Shop48cn Step #1: http://shop.48.cn/api/uc.ashx
+        /// call http://shop.48.cn/api/uc.ashx
         /// two cookies
         /// cookie #1: route cookie, length=32
         /// route=7317c4b93b94800f61ea7f54b5887351
@@ -254,4 +265,3 @@ namespace SNHTicketV2.Authentication
         }
     }
 }
- 

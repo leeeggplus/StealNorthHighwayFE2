@@ -33,9 +33,27 @@ namespace SNHTicketV2.Authentication
         /// <returns>bool</returns>
         public override bool Authenticate()
         {
-            bool shopAuthResult = UserSnh48Com_Vip48Php_Auth() && Shop48cn_Api_UcAshx_Auth() && Shop48cn_Auth();
-            this.pb_authComplete = shopAuthResult;
+            bool shopAuthResult = false;
 
+            // auth for common user consists of three steps:
+            // step#1: UserSnh48Com_Vip48Php_Auth()
+            // call:   http://user.snh48.com/vip48.php?username=yukanana7&password=angel0416&act=login&_=1479118433288
+            // cookie: no cookie returned
+            shopAuthResult = UserSnh48Com_Vip48Php_Auth();
+
+            // step#2: Shop48cn_Api_UcAshx_Auth() 
+            // call:   http://shop.48.cn/api/uc.ashx
+            // cookie: route, .AspNet.ApplicationCookie
+            if (shopAuthResult)
+                shopAuthResult = shopAuthResult && Shop48cn_Api_UcAshx_Auth();
+
+            // step#3: Shop48cn_Auth()
+            // call:   http://shop.48.cn/
+            // cookie: __RequestVerificationToken
+            if (shopAuthResult)
+                shopAuthResult = shopAuthResult && Shop48cn_Auth();
+
+            this.pb_authComplete = shopAuthResult;
             return shopAuthResult;
         }
 
