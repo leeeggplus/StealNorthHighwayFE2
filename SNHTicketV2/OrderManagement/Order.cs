@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SNHTicketV2.OrderHandler
+namespace SNHTicketV2.OrderManagement
 {
     public class Order
     {
         // Request information
         private string   ps_OrderInternalName;
         private string   ps_Username;
-        private string   ps_Pwd;
-        private UserType p_UserType;
+        private string   ps_Pwd;        
         private int      pi_ShowID;
         private int      pi_SeatType;
         private int      pi_TicketNO;
+        private UserType p_UserType;
 
         // Check before submit
         // Only submit if request is logically valid/correct
@@ -26,6 +26,7 @@ namespace SNHTicketV2.OrderHandler
         private string  ps_OrderSNHSysName;
         private string  ps_Message;
 
+        // public attributes
         public string OrderInternalName
         {
             get { return this.ps_OrderInternalName; }
@@ -43,7 +44,7 @@ namespace SNHTicketV2.OrderHandler
 
         public UserType UserType
         {
-            get { return this.UserType; }
+            get { return this.p_UserType; }
         }
 
         public int ShowID
@@ -84,6 +85,10 @@ namespace SNHTicketV2.OrderHandler
             set { this.ps_Message = value; }
         }
 
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <returns>null</returns>
         public Order(string orderInternalName, string userName, string pwd, UserType userType, int showID, int seatType, int ticketNO)
         {
             this.pb_isValid = true;

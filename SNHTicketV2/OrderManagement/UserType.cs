@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SNHTicketV2.OrderHandler
+namespace SNHTicketV2.OrderManagement
 {
     public enum UserType
     {
-        VipUser              = 1,
-        UnRealNameAuthedUser = 2,
+        Undefined            = 0,
+        UnRealNameAuthedUser = 1,
+        VipUser              = 2,
     }
 }
