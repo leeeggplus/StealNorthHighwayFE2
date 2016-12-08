@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SNHTicketV2.Resource;
+using SNHTicketV2.Authentication;
 
 namespace SNHTicketV2.OrderManagement
 {
@@ -20,6 +22,7 @@ namespace SNHTicketV2.OrderManagement
         // Check before submit
         // Only submit if request is logically valid/correct
         private bool pb_isValid;
+        private AuthProvider p_authProvider;
 
         // response from SNH48
         private bool    pb_OrderState;
@@ -85,6 +88,11 @@ namespace SNHTicketV2.OrderManagement
             set { this.ps_Message = value; }
         }
 
+        public AuthProvider AuthProvider
+        {
+            get { return this.p_authProvider; }
+        }
+
         /// <summary>
         /// .ctor
         /// </summary>
@@ -98,7 +106,7 @@ namespace SNHTicketV2.OrderManagement
             this.pi_ShowID = showID;
             this.pi_SeatType = seatType;
             this.pi_TicketNO = ticketNO;
-            this.p_UserType = UserType;
+            this.p_UserType = userType;
 
             // Known Seat Type 2(VIP, only one), 3(seat, more than one), 4(stand, only one)
             if (this.pi_SeatType < 2 || this.pi_SeatType > 4)
@@ -111,10 +119,19 @@ namespace SNHTicketV2.OrderManagement
             if (this.pi_TicketNO > 1 && (this.pi_SeatType == 4 || this.pi_SeatType == 2))
                 this.pb_isValid = false;
 
-            // Internal State
-            this.pb_OrderState = false;
-            this.ps_OrderSNHSysName = string.Empty;
-            this.ps_Message = string.Empty;
+            // initialize internal state and auth provider
+            if (this.pb_isValid)
+            {
+                this.pb_OrderState = false;
+                this.ps_OrderSNHSysName = string.Empty;
+                this.ps_Message = string.Empty;
+
+                // initialize auth provider
+                if (this.p_UserType == UserType.UnRealNameAuthedUser)
+                    this.p_authProvider = new UserAuthProvider(this.ps_Username, this.ps_Pwd);
+                else
+                    this.p_authProvider = new VipAuthProvider(this.ps_Username, this.ps_Pwd);                          
+            }
         }
     }
 }

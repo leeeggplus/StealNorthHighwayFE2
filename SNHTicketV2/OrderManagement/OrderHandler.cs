@@ -1,7 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using System.Threading;
 using System.Collections.Generic;
+using SNHTicketV2.Authentication;
+
 using System.Threading.Tasks;
 
 namespace SNHTicketV2.OrderManagement
@@ -25,8 +28,11 @@ namespace SNHTicketV2.OrderManagement
             this.LoadOrders();
         }
 
-        // Load Order Requests from XML
-        // Max 10 requests/threads in one Process.
+        /// <summary>
+        /// Load Order Requests from XML
+        /// Max 10 requests/threads in one Process.
+        /// </summary>
+        /// <returns>void</returns>
         private void LoadOrders()
         {
             string filePath = Path.Combine(Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory), @"Orders.xml");
@@ -53,7 +59,7 @@ namespace SNHTicketV2.OrderManagement
 
                         showId = int.Parse(node.Attributes["ShowID"].Value);
                         seatType = int.Parse(node.Attributes["SeatType"].Value);
-                        ticketNo = int.Parse(node.Attributes["TicketNO"].Value);                        
+                        ticketNo = int.Parse(node.Attributes["TicketNO"].Value);
 
                         if (strUserType == ps_userType_user)
                             userType = UserType.UnRealNameAuthedUser;
@@ -61,13 +67,43 @@ namespace SNHTicketV2.OrderManagement
                             userType = UserType.VipUser;
                         else
                             continue;
+
+                        Order order = new Order(internalOrderName, username, pwd, userType, showId, seatType, ticketNo);
+                        p_Orders.Add(order);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         continue;
                     }                    
+                }
+            }
+        }
 
-                    p_Orders.Add(new Order(internalOrderName, username, pwd, userType, showId, seatType, ticketNo));
+        // Multi-thread Call
+        public void Call()
+        {
+            int nWorkThreads;
+            int nCompletionPortThreads;
+            ThreadPool.GetMaxThreads(out nWorkThreads, out nCompletionPortThreads);
+
+            for (int i = 0; i < this.p_Orders.Count; i++)
+            {
+                ThreadPool.QueueUserWorkItem(FuncWaitCallback, this.p_Orders[i]);
+            }
+        }
+
+        static void FuncWaitCallback(object parmOrder)
+        {
+            Order order = parmOrder as Order;
+
+            if (order != null)
+            {
+                // Authenticate
+                order.AuthProvider.Authenticate();
+
+                if (order.AuthProvider.IsAuthComplete())
+                {
+                    // Submit order here
                 }
             }
         }

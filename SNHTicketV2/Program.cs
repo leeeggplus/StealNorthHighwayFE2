@@ -13,11 +13,13 @@ namespace SNHTicketV2
         static void Main(string[] args)
         {
             OrderHandler orderHandler = new OrderHandler();
+            orderHandler.Call();
 
+            Console.Read();
 
             //AuthProvider uap = new UserAuthProvider("leeegg1", "angel0416");
-            AuthProvider vap = new VipAuthProvider("kandik11", "kandi000");
-            vap.Authenticate();
+            // AuthProvider vap = new VipAuthProvider("kandik11", "kandi000");
+            // vap.Authenticate();
         }
     }
 }
