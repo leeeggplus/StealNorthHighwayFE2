@@ -45,14 +45,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AuthProvider\AuthProvider.cs" />
-    <Compile Include="AuthProvider\UserAuthProvider.cs" />
-    <Compile Include="AuthProvider\VipAuthProvider.cs" />
+    <Compile Include="Authentication\AuthProvider.cs" />
+    <Compile Include="Authentication\UserAuthProvider.cs" />
+    <Compile Include="Authentication\VipAuthProvider.cs" />
+    <Compile Include="OrderHandler\Order.cs" />
+    <Compile Include="OrderHandler\UserType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="OrderHandler\Orders.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

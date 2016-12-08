@@ -66,7 +66,10 @@ namespace SNHTicketV2.Authentication
         /// <returns>bool</returns>
         public abstract bool Authenticate();
 
-        /* ctor */
+        /// <summary>
+        /// .ctor
+        /// </summary>
+        /// <returns>null</returns>
         public AuthProvider(string userName, string userPwd)
         {
             if (userName == string.Empty || userPwd == string.Empty)
