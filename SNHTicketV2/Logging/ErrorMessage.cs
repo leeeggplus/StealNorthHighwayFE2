@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SNHTicketV2.Resource
+namespace SNHTicketV2.Logging
 {
     public class ErrorMessage
     {

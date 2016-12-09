@@ -49,12 +49,13 @@
     <Compile Include="Authentication\SubmitCheckOrderResponse.cs" />
     <Compile Include="Authentication\UserAuthProvider.cs" />
     <Compile Include="Authentication\VipAuthProvider.cs" />
+    <Compile Include="Logging\Logger.cs" />
     <Compile Include="OrderManagement\Order.cs" />
     <Compile Include="OrderManagement\OrderHandler.cs" />
     <Compile Include="OrderManagement\UserType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource\ErrorMessage.cs" />
+    <Compile Include="Logging\ErrorMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\App.config" />

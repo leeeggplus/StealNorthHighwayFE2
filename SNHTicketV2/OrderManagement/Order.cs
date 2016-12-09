@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SNHTicketV2.Resource;
 using SNHTicketV2.Authentication;
 
 namespace SNHTicketV2.OrderManagement
