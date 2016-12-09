@@ -23,8 +23,7 @@ namespace SNHTicketV2.Authentication
         /// <returns>Null</returns>
         public UserAuthProvider(Order order) : base(order)
         {            
-        }     
-
+        }    
 
         /// <summary>
         /// override abstract method.

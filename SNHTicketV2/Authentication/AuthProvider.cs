@@ -341,9 +341,12 @@ namespace SNHTicketV2.Authentication
         }
 
 
-        // Submit Order to http://shop.48.cn/TOrder/add
-        // Result in JSON with Order ID
-        // ReturnObject=/TOrder/Item/161116-2-100207
+        /// <summary>
+        /// Submit Order to http://shop.48.cn/TOrder/add
+        /// Result in JSON with Order ID
+        /// ReturnObject=/TOrder/Item/161116-2-100207
+        /// </summary>
+        /// <returns>void</returns>
         public bool SubmitOrder()
         {
             int showID = this.p_order.ShowID;
@@ -446,9 +449,12 @@ namespace SNHTicketV2.Authentication
         }
 
 
-        // Submit Order to http://shop.48.cn/TOrder/tickCheck
-        // Result in JSON with Order ID
-        // ReturnObject=/TOrder/Item/161116-2-100207
+        /// <summary>
+        /// Submit Order to http://shop.48.cn/TOrder/tickCheck
+        /// Result in JSON with Order ID
+        /// ReturnObject=/TOrder/Item/161116-2-100207
+        /// </summary>
+        /// <returns>void</returns>
         public string CheckOrder(int showID, int seatType)
         {
             if (showID <= 0)

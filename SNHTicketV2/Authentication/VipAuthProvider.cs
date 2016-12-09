@@ -23,10 +23,20 @@ namespace SNHTicketV2.Authentication
         // protected static string uchomeRewardLogCookieRegexPat = @"route=([a-z]|[A-Z]|\d)+;{1}";
         protected static string uchomeAuthCookieRegexPat = @"uchome_auth=([a-z]|[A-Z]|%|\d)+;{1}";
 
+        /// <summary>
+        /// .ctor, simply inherit base
+        /// </summary>
+        /// <returns>bool</returns>
         public VipAuthProvider(Order order) : base(order)
         {
         }
 
+
+        /// <summary>
+        /// override abstract method.
+        /// trigger the authenticate for common users.
+        /// </summary>
+        /// <returns>bool</returns>
         public override bool Authenticate()
         {
             bool shopAuthResult = false;

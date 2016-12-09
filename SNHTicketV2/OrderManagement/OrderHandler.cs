@@ -79,7 +79,10 @@ namespace SNHTicketV2.OrderManagement
             }
         }
 
-        // Multi-thread Call
+        /// <summary>
+        /// Multiple thread calls out.
+        /// </summary>
+        /// <returns>void</returns>
         public void Call()
         {
             int nWorkThreads;
@@ -92,6 +95,10 @@ namespace SNHTicketV2.OrderManagement
             }
         }
 
+        /// <summary>
+        /// Callback function for each thread.
+        /// </summary>
+        /// <returns>void</returns>
         static void FuncWaitCallback(object parmOrder)
         {
             Order order = parmOrder as Order;
