@@ -208,16 +208,16 @@ namespace SNHTicketV2.Authentication
         ///                                   2qt.w01t0a.ivhvf6xn; _qdda=3-1.2dkq5o; _qddab=3-83te1g.ivkv5drz
         /// </summary>
         /// <returns>HttpWebRequest</returns>
-        protected override HttpWebRequest ComposeSubmitorCheckOrderRequestHeader(string requestType)
+        protected override HttpWebRequest ComposeSubmitOrderRequestHeader(string requestType)
         {
             int showID = this.p_order.ShowID;
             int seatType = this.p_order.SeatType;
 
-            string requestUrl = (requestType == ps_shop48cn_orderRequestType_SubmitOrder) ? ps_shop48cn_orderSubmitUri : ps_shop48cn_orderCheckUri;
+            string requestUrl = ps_shop48cn_orderSubmitUri;
             string showDetailsUri = string.Format(ps_shop48cn_showUri, showID.ToString(), seatType.ToString());
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
 
-            request.Method = "POST";
+            request.Method = requestType;
             request.Accept = "application/json, text/javascript, */*; q=0.01";
             request.Headers.Add("Accept-Language", ps_AcceptLanguage);
             request.Headers.Add("Accept-Encoding", ps_AcceptEncoding);
@@ -245,6 +245,51 @@ namespace SNHTicketV2.Authentication
             // aspNetApp cookie for vip
             request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
             
+            return request;
+        }
+
+        protected override HttpWebRequest ComposeCheckOrderRequestHeader(string requestType)
+        {
+            Random rnd = new Random();
+            int showID = this.p_order.ShowID;
+            int seatType = this.p_order.SeatType;
+
+            // Compose Post Data
+            string postDataFormat = "?id={0}&r={1}";
+            string postData = string.Format(postDataFormat, showID.ToString(), rnd.NextDouble().ToString());
+
+            string requestUrl = ps_shop48cn_orderCheckUri + postData;
+            string showDetailsUri = string.Format(ps_shop48cn_showUri, showID.ToString(), seatType.ToString());
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(requestUrl);
+
+            request.Method = requestType;
+            request.Accept = "application/json, text/javascript, */*; q=0.01";
+            request.Headers.Add("Accept-Language", ps_AcceptLanguage);
+            request.Headers.Add("Accept-Encoding", ps_AcceptEncoding);
+            request.UserAgent = ps_UserAgent;
+            request.Headers.Add("X-Requested-With", "XMLHttpRequest");
+
+            request.Headers.Add("Origin", ps_httpshop48cn);
+            request.Referer = showDetailsUri;
+            request.KeepAlive = true;
+
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+
+            // Compose Cookie
+            if (request.CookieContainer == null)
+                request.CookieContainer = new CookieContainer();
+
+            // route cookie
+            request.CookieContainer.Add(new Cookie(ps_shop48cn_routeCookieName, cookies[ps_shop48cn_routeCookieName], "/", ps_shop48cn));
+            // aspNetApp cookie
+            request.CookieContainer.Add(new Cookie(ps_shop48cn_aspNetAppCookieName, cookies[ps_shop48cn_aspNetAppCookieName], "/", ps_shop48cn));
+            // csrf cookie
+            request.CookieContainer.Add(new Cookie(ps_shop48cn_csrfCookieName, cookies[ps_shop48cn_csrfCookieName], "/", ps_shop48cn));
+            // uchome_auth cookie for vip
+            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
+            // aspNetApp cookie for vip
+            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
+
             return request;
         }
     }
