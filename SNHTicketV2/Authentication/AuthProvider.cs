@@ -380,7 +380,7 @@ namespace SNHTicketV2.Authentication
                 if (submitOrderResponse.Message.ToString() == "下单申请成功" && submitOrderResponse.ReturnObject == null)
                 {
                     Thread.Sleep(1000);
-                    while (orderSNHSysName == "Waiting" || orderSNHSysName == string.Empty)
+                    while (orderSNHSysName == "wait" || orderSNHSysName == string.Empty)
                     {
                         orderSNHSysName = CheckOrder(showID, seatType);
                         Thread.Sleep(5000);
@@ -427,15 +427,18 @@ namespace SNHTicketV2.Authentication
                     Hashtable resDict = (Hashtable)jsSerializer.Deserialize(stringContainer, typeof(Hashtable));
                     SubmitCheckOrderResponse CheckOrderResponse = new SubmitCheckOrderResponse(bool.Parse(resDict["HasError"].ToString()), resDict["ErrorCode"], resDict["Message"], resDict["ReturnObject"]);
 
+                    // ErrorCode=wait, HasError=False, Message=null, ReturnObject=null
                     if (CheckOrderResponse.ErrorCode.ToString() == "wait" && !CheckOrderResponse.HasError)
                     {
-                        orderSNHSysName = "Waiting";
+                        orderSNHSysName = "wait";
                     }
+                    // ErrorCode=success, HasError=False, Message=ok, ReturnObject=/TOrder/Item/161123-2-101262
                     else if (!CheckOrderResponse.HasError && (CheckOrderResponse.ErrorCode != null && CheckOrderResponse.ErrorCode.ToString() == "success") &&
                              CheckOrderResponse.ReturnObject != null)
                     {
                         orderSNHSysName = CheckOrderResponse.ReturnObject.ToString();
                     }
+                    // retry
                     else
                     {
                         orderSNHSysName = string.Empty;
