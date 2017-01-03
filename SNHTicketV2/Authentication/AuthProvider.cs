@@ -139,7 +139,22 @@ namespace SNHTicketV2.Authentication
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                string stringContainer = new StreamReader(response.GetResponseStream()).ReadToEnd().Trim();
+                Stream streamReceive;
+                string stringContainer;
+                System.IO.Compression.GZipStream zipStream;
+
+                // if ContentEncoding is gzip, need to de-compress
+                if (response.ContentEncoding.ToLower() == "gzip")
+                {
+                    streamReceive = response.GetResponseStream();
+                    zipStream = new System.IO.Compression.GZipStream(streamReceive, System.IO.Compression.CompressionMode.Decompress);
+                    stringContainer = new StreamReader(zipStream, Encoding.Default).ReadToEnd().Trim();
+                }
+                else
+                {
+                    stringContainer = new StreamReader(response.GetResponseStream(), Encoding.Default).ReadToEnd().Trim();
+                }
+                
                 // substring 1 -> stringContainer`s size - 2
                 // purpose: exclude the "(" at first and ")" at the end of the response. 
                 string responseString = stringContainer.Substring(1, stringContainer.Length - 2);
