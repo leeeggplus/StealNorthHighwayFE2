@@ -2,6 +2,7 @@
 using System.IO;
 using System.Xml;
 using System.Threading;
+using System.Configuration;
 using System.Collections.Generic;
 using SNHTicketV2.Authentication;
 
@@ -13,10 +14,14 @@ namespace SNHTicketV2.OrderManagement
     {
         // Members
         private List<Order> p_Orders;
+        private DateTime pdt_StartTime;     
 
         // static members
         private static string ps_userType_user = "user";
         private static string ps_userType_vip = "vip";
+
+        // event wait handler
+        public static EventWaitHandle _StartTimeManualResetEvent = new EventWaitHandle(false, EventResetMode.ManualReset);
 
         /// <summary>
         /// .ctor
@@ -24,6 +29,8 @@ namespace SNHTicketV2.OrderManagement
         /// <returns>null</returns>
         public OrderHandler()
         {
+            pdt_StartTime = DateTime.Parse(ConfigurationManager.AppSettings["StartTime"]);
+
             p_Orders = new List<Order>();
             this.LoadOrders();
         }
@@ -92,6 +99,16 @@ namespace SNHTicketV2.OrderManagement
             for (int i = 0; i < this.p_Orders.Count; i++)
             {
                 ThreadPool.QueueUserWorkItem(FuncWaitCallback, this.p_Orders[i]);
+            }
+
+            // wait for the start time
+            while (true)
+            {
+                if (DateTime.Now >= this.pdt_StartTime)
+                {
+                    _StartTimeManualResetEvent.Set();
+                    break;
+                }
             }
         }
 

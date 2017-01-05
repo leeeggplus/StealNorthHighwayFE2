@@ -24,7 +24,6 @@ namespace SNHTicketV2.Authentication
         protected Uri       puri_shop48cnAuthUrl;
         protected Uri       puri_www48cnAuthUrl;
         protected Order     p_order;
-        protected DateTime  pdt_StartTime;
         protected List<Uri> authEndPoints;
 
         protected Dictionary<string, string> cookies;
@@ -109,8 +108,7 @@ namespace SNHTicketV2.Authentication
             string rnd2 = random.Next(10000, 99999).ToString();
             string rnd = rnd1 + rnd2;
 
-            this.ps_random13DigitStamp = rnd.ToString();
-            this.pdt_StartTime = DateTime.Parse(ConfigurationManager.AppSettings["StartTime"]);            
+            this.ps_random13DigitStamp = rnd.ToString();                   
             this.ps_MainEntryUrl = string.Format(ConfigurationManager.AppSettings["MainEntryUrl"], this.p_order.UserName, this.p_order.Password, this.ps_random13DigitStamp);
         }
         
@@ -327,12 +325,10 @@ namespace SNHTicketV2.Authentication
             // Compose Post Data
             string postDataFormat = "id={0}&num={1}&seattype={2}&brand_id=2&r={3}";
             string postData = string.Format(postDataFormat, showID, ticketCount, seatType, rnd.NextDouble().ToString());
-            byte[] postByteData = Encoding.UTF8.GetBytes(postData);                
+            byte[] postByteData = Encoding.UTF8.GetBytes(postData);
 
-            // Loop to the right time
-            while (DateTime.Now < this.pdt_StartTime)
-            { 
-            }
+            // wait to be notified by main thread.
+            OrderHandler._StartTimeManualResetEvent.WaitOne();
 
             try
             {
