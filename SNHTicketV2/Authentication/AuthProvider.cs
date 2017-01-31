@@ -41,14 +41,14 @@ namespace SNHTicketV2.Authentication
         // static member - URLs
         protected static string ps_shop48cn = "shop.48.cn";
         protected static string ps_www48cn = "www.48.cn";
-        protected static string ps_httpshop48cn = "http://shop.48.cn";
+        protected static string ps_httpshop48cn = "https://shop.48.cn";
         protected static string ps_httpwww48cn = "http://www.48.cn";
 
         protected static string ps_StartPointReferer = "http://vip.48.cn/Home/Login/index.html";
 
-        protected static string ps_shop48cn_showUri = "http://shop.48.cn/tickets/item/{0}?seat_type={1}";
-        protected static string ps_shop48cn_orderSubmitUri = "http://shop.48.cn/TOrder/add";
-        protected static string ps_shop48cn_orderCheckUri = "http://shop.48.cn/TOrder/tickCheck";
+        protected static string ps_shop48cn_showUri = "https://shop.48.cn/tickets/item/{0}?seat_type={1}";
+        protected static string ps_shop48cn_orderSubmitUri = "https://shop.48.cn/TOrder/add";
+        protected static string ps_shop48cn_orderCheckUri = "https://shop.48.cn/TOrder/tickCheck";
         protected static string ps_shop48cn_orderRequestType_POST = "POST";
         protected static string ps_shop48cn_orderRequestType_GET = "GET";
 

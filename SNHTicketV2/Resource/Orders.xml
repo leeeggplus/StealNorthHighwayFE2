@@ -1,7 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Orders>
-  <Order Name="order_1" Username="yukanana7" UserType="user" Pwd="angel0416" ShowID ="574" SeatType="3" TicketNO="1"></Order>
-  <Order Name="order_2" Username="leeegg1"   UserType="user" Pwd="angel0416" ShowID ="574" SeatType="4" TicketNO="1"></Order>
-  <Order Name="order_3" Username="YimingBoy" UserType="user" Pwd="angel0416" ShowID ="568" SeatType="4" TicketNO="1"></Order>
-  <Order Name="order_1" Username="kandik11"  UserType="vip"  Pwd="kandi000"  ShowID ="568" SeatType="3" TicketNO="1"></Order>
+  <Order Name="order_1" Username="kandik11"  UserType="vip"  Pwd="kandi000"  ShowID ="658" SeatType="4" TicketNO="1"></Order>
 </Orders>

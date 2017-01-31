@@ -50,7 +50,8 @@ namespace SNHTicketV2.Authentication
             // step#2: Www48cn_Api_UcPhp_Auth()
             // call:   http://www.48.cn/api/uc.php
             // cookie: uchome_auth, uchome_loginuser
-            if (shopAuthResult)
+            // NOTES: 1/31/2017, notice it no longer returns http://www.48.cn/api/uc.php from step#1
+            if (shopAuthResult && this.puri_www48cnAuthUrl != null)
                 shopAuthResult = shopAuthResult && Www48cn_Api_UcPhp_Auth();
 
             // step#3: Shop48cn_Api_UcAshx_Auth() 
@@ -154,10 +155,15 @@ namespace SNHTicketV2.Authentication
             request.CookieContainer.Add(new Cookie(ps_shop48cn_routeCookieName, cookies[ps_shop48cn_routeCookieName], "/", ps_shop48cn));
             // aspNetApp cookie
             request.CookieContainer.Add(new Cookie(ps_shop48cn_aspNetAppCookieName, cookies[ps_shop48cn_aspNetAppCookieName], "/", ps_shop48cn));
-            // uchome_auth cookie
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
-            // aspNetApp cookie
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
+
+            // uchome_auth cookie for vip
+            // NOTES: 1/31/2017 notice it no longer call returns http://www.48.cn/api/uc.php, thus no uchome_auth cookies
+            if (cookies.Keys.Contains(ps_www48cn_uchome_auth_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
+
+            // uchome_loginuser cookie for vip
+            if (cookies.Keys.Contains(ps_www48cn_uchome_loginuser_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
 
             // send request           
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
@@ -240,10 +246,15 @@ namespace SNHTicketV2.Authentication
             request.CookieContainer.Add(new Cookie(ps_shop48cn_aspNetAppCookieName, cookies[ps_shop48cn_aspNetAppCookieName], "/", ps_shop48cn));
             // csrf cookie
             request.CookieContainer.Add(new Cookie(ps_shop48cn_csrfCookieName, cookies[ps_shop48cn_csrfCookieName], "/", ps_shop48cn));
+                        
             // uchome_auth cookie for vip
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
-            // aspNetApp cookie for vip
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
+            // NOTES: 1/31/2017 notice it no longer call returns http://www.48.cn/api/uc.php, thus no uchome_auth cookies
+            if (cookies.Keys.Contains(ps_www48cn_uchome_auth_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
+
+            // uchome_loginuser cookie for vip
+            if (cookies.Keys.Contains(ps_www48cn_uchome_loginuser_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
             
             return request;
         }
@@ -286,9 +297,13 @@ namespace SNHTicketV2.Authentication
             // csrf cookie
             request.CookieContainer.Add(new Cookie(ps_shop48cn_csrfCookieName, cookies[ps_shop48cn_csrfCookieName], "/", ps_shop48cn));
             // uchome_auth cookie for vip
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
-            // aspNetApp cookie for vip
-            request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
+            // NOTES: 1/31/2017 notice it no longer call returns http://www.48.cn/api/uc.php, thus no uchome_auth cookies
+            if (cookies.Keys.Contains(ps_www48cn_uchome_auth_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_auth_CookieName, cookies[ps_www48cn_uchome_auth_CookieName], "/", ps_dot48cn));
+
+            // uchome_loginuser cookie for vip
+            if (cookies.Keys.Contains(ps_www48cn_uchome_loginuser_CookieName))
+                request.CookieContainer.Add(new Cookie(ps_www48cn_uchome_loginuser_CookieName, cookies[ps_www48cn_uchome_loginuser_CookieName], "/", ps_dot48cn));
 
             return request;
         }
