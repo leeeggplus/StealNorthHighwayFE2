@@ -12,4 +12,9 @@ namespace SNHTicketV2.OrderManagement
         UnRealNameAuthedUser = 1,
         VipUser              = 2,
     }
+
+    public class testclass
+    {
+
+    }
 }
